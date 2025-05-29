@@ -1,0 +1,23 @@
+{
+    "crowd-game": {
+        "bundle": "resources"
+    },
+    "dice_shake": {
+        "bundle": "resources"
+    },
+    "ball_jumping_hit": {
+        "bundle": "resources"
+    },
+    "ball_jumping_normal": {
+        "bundle": "resources"
+    },
+    "ball_rolling": {
+        "bundle": "resources"
+    },
+    "highlight_wheel": {
+        "bundle": "resources"
+    },
+    "wheel_result_announce": {
+        "bundle": "resources"
+    }
+}

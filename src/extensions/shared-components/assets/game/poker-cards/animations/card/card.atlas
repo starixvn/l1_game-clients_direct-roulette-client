@@ -1,0 +1,27 @@
+
+card.png
+size: 131,79
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+boder
+  rotate: true
+  xy: 2, 2
+  size: 75, 105
+  orig: 80, 110
+  offset: 3, 2
+  index: -1
+dot light
+  rotate: false
+  xy: 109, 57
+  size: 20, 20
+  orig: 23, 24
+  offset: 2, 2
+  index: -1
+empty
+  rotate: false
+  xy: 109, 54
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

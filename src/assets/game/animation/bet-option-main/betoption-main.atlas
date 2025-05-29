@@ -1,0 +1,20 @@
+
+betoption-main.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bet-option-main
+  rotate: false
+  xy: 2, 41
+  size: 282, 330
+  orig: 282, 330
+  offset: 0, 0
+  index: -1
+vfx-star
+  rotate: true
+  xy: 2, 2
+  size: 37, 40
+  orig: 37, 40
+  offset: 0, 0
+  index: -1
