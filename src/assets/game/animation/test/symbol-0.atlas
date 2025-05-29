@@ -1,0 +1,167 @@
+
+symbol-0.png
+size: 737,174
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+silk
+  rotate: false
+  xy: 2, 5
+  size: 180, 167
+  orig: 209, 196
+  offset: 11, 19
+  index: -1
+silkphai
+  rotate: false
+  xy: 280, 75
+  size: 85, 97
+  orig: 87, 97
+  offset: 1, 0
+  index: -1
+silktrai
+  rotate: false
+  xy: 184, 44
+  size: 94, 128
+  orig: 94, 128
+  offset: 0, 0
+  index: -1
+vfx/frieee10
+  rotate: false
+  xy: 367, 132
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee11
+  rotate: false
+  xy: 367, 90
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee12
+  rotate: false
+  xy: 449, 132
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee13
+  rotate: false
+  xy: 449, 90
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee14
+  rotate: false
+  xy: 531, 132
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee15
+  rotate: false
+  xy: 531, 90
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee16
+  rotate: false
+  xy: 613, 132
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee17
+  rotate: false
+  xy: 613, 90
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee18
+  rotate: true
+  xy: 695, 92
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee19
+  rotate: false
+  xy: 184, 2
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee20
+  rotate: false
+  xy: 280, 33
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee21
+  rotate: false
+  xy: 367, 48
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee22
+  rotate: false
+  xy: 449, 48
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee23
+  rotate: false
+  xy: 531, 48
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee24
+  rotate: false
+  xy: 613, 48
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee25
+  rotate: false
+  xy: 362, 6
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee26
+  rotate: false
+  xy: 444, 6
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee27
+  rotate: false
+  xy: 526, 6
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee28
+  rotate: false
+  xy: 608, 6
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1
+vfx/frieee29
+  rotate: true
+  xy: 695, 10
+  size: 80, 40
+  orig: 80, 40
+  offset: 0, 0
+  index: -1

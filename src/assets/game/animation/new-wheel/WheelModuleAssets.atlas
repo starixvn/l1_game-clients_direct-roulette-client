@@ -1,0 +1,90 @@
+
+WheelModuleAssets.png
+size: 730,900
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Background
+  rotate: true
+  xy: 2, 365
+  size: 533, 532
+  orig: 536, 535
+  offset: 1, 3
+  index: -1
+Background_Shadow
+  rotate: true
+  xy: 536, 552
+  size: 150, 149
+  orig: 152, 152
+  offset: 1, 3
+  index: -1
+Ball
+  rotate: true
+  xy: 642, 489
+  size: 61, 58
+  orig: 66, 66
+  offset: 3, 8
+  index: -1
+Handle
+  rotate: false
+  xy: 685, 395
+  size: 18, 92
+  orig: 18, 94
+  offset: 0, 2
+  index: -1
+Handle-Base
+  rotate: true
+  xy: 536, 398
+  size: 46, 49
+  orig: 48, 58
+  offset: 1, 3
+  index: -1
+Handle_Shadow
+  rotate: false
+  xy: 536, 446
+  size: 104, 104
+  orig: 108, 108
+  offset: 2, 4
+  index: -1
+Handle_Static
+  rotate: false
+  xy: 587, 388
+  size: 16, 14
+  orig: 16, 16
+  offset: 0, 2
+  index: -1
+Middle
+  rotate: true
+  xy: 536, 704
+  size: 194, 192
+  orig: 194, 194
+  offset: 0, 2
+  index: -1
+Numbers
+  rotate: true
+  xy: 365, 12
+  size: 351, 349
+  orig: 351, 350
+  offset: 0, 1
+  index: -1
+Rings
+  rotate: false
+  xy: 2, 2
+  size: 361, 361
+  orig: 363, 363
+  offset: 1, 2
+  index: -1
+Top
+  rotate: true
+  xy: 587, 404
+  size: 40, 39
+  orig: 42, 42
+  offset: 1, 3
+  index: -1
+Win_Highlight
+  rotate: false
+  xy: 642, 402
+  size: 41, 85
+  orig: 42, 86
+  offset: 1, 1
+  index: -1

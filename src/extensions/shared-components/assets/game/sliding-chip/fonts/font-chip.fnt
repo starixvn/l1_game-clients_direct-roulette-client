@@ -1,0 +1,20 @@
+info face="Bebas Neue" size=36 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0
+common lineHeight=41 base=33 scaleW=128 scaleH=128 pages=1 packed=0
+page id=0 file="font-chip.png"
+chars count=14
+char id=32 x=14 y=110 width=0 height=0 xoffset=0 yoffset=27 xadvance=6 page=0 chnl=0
+char id=75 x=67 y=2 width=19 height=34 xoffset=0 yoffset=1 xadvance=19 page=0 chnl=0
+char id=77 x=67 y=38 width=22 height=34 xoffset=0 yoffset=1 xadvance=19 page=0 chnl=0
+char id=57 x=46 y=2 width=20 height=34 xoffset=2 yoffset=1 xadvance=15 page=0 chnl=0
+char id=56 x=24 y=2 width=20 height=34 xoffset=1 yoffset=1 xadvance=15 page=0 chnl=0
+char id=55 x=44 y=38 width=18 height=34 xoffset=2 yoffset=1 xadvance=15 page=0 chnl=0
+char id=54 x=2 y=74 width=20 height=34 xoffset=2 yoffset=1 xadvance=15 page=0 chnl=0
+char id=53 x=24 y=74 width=18 height=34 xoffset=2 yoffset=1 xadvance=15 page=0 chnl=0
+char id=52 x=2 y=38 width=20 height=34 xoffset=1 yoffset=1 xadvance=15 page=0 chnl=0
+char id=51 x=24 y=38 width=18 height=34 xoffset=2 yoffset=1 xadvance=15 page=0 chnl=0
+char id=50 x=90 y=2 width=18 height=34 xoffset=2 yoffset=1 xadvance=15 page=0 chnl=0
+char id=49 x=111 y=2 width=11 height=34 xoffset=0 yoffset=1 xadvance=9 page=0 chnl=0
+char id=48 x=0 y=2 width=19 height=34 xoffset=0 yoffset=1 xadvance=15 page=0 chnl=0
+char id=46 x=2 y=110 width=10 height=12 xoffset=2 yoffset=23 xadvance=7 page=0 chnl=0
+char id=44 x=44 y=74 width=10 height=16 xoffset=2 yoffset=22 xadvance=7 page=0 chnl=0
+kernings count=0

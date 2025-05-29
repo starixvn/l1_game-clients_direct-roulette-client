@@ -1,0 +1,20 @@
+
+betoption-sub.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bet-option-sub
+  rotate: false
+  xy: 2, 2
+  size: 252, 164
+  orig: 252, 164
+  offset: 0, 0
+  index: -1
+vfx-star
+  rotate: true
+  xy: 2, 168
+  size: 37, 40
+  orig: 37, 40
+  offset: 0, 0
+  index: -1

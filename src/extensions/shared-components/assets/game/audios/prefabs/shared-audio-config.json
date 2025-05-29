@@ -1,0 +1,97 @@
+{
+    "click": {
+        "bundle": "shared-bundle",
+        "path": "click",
+        "isLazyLoad": true
+    },
+    "single-chip": {
+        "bundle": "shared-bundle",
+        "path": "single-chip",
+        "isLazyLoad": true
+    },
+    "receive-finish": {
+        "bundle": "shared-bundle",
+        "path": "receive-finish",
+        "isLazyLoad": true
+    },
+    "starting-round": {
+        "bundle": "shared-bundle",
+        "path": "starting-round",
+        "isLazyLoad": true
+    },
+    "draw-single-card": {
+        "bundle": "shared-bundle",
+        "path": "draw-single-card",
+        "isLazyLoad": true
+    },
+    "draw-single-domino-card": {
+        "bundle": "shared-bundle",
+        "path": "draw-single-domino-card",
+        "isLazyLoad": true
+    },
+    "pay-money": {
+        "bundle": "shared-bundle",
+        "path": "pay-money",
+        "isLazyLoad": true
+    },
+    "start-betting_en": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_en",
+        "isLazyLoad": true
+    },
+    "stop-betting_en": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_en",
+        "isLazyLoad": true
+    },
+    "start-betting_vi": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_vi",
+        "isLazyLoad": true
+    },
+    "stop-betting_vi": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_vi",
+        "isLazyLoad": true
+    },
+    "start-betting_id": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_id",
+        "isLazyLoad": true
+    },
+    "stop-betting_id": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_id",
+        "isLazyLoad": true
+    },
+    "start-betting_th": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_th",
+        "isLazyLoad": true
+    },
+    "stop-betting_th": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_th",
+        "isLazyLoad": true
+    },
+    "start-betting_zh_cn": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_zh_cn",
+        "isLazyLoad": true
+    },
+    "stop-betting_zh_cn": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_zh_cn",
+        "isLazyLoad": true
+    },
+    "start-betting_zh_tw": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_zh_tw",
+        "isLazyLoad": true
+    },
+    "stop-betting_zh_tw": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_zh_tw",
+        "isLazyLoad": true
+    }
+}

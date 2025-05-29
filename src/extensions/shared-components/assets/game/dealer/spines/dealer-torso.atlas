@@ -1,0 +1,13 @@
+
+dealer-torso.png
+size: 208,203
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+skin5/body
+  rotate: false
+  xy: 2, 2
+  size: 204, 199
+  orig: 204, 199
+  offset: 0, 0
+  index: -1
