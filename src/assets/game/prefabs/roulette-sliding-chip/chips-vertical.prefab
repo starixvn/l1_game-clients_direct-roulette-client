@@ -31,11 +31,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 103
+        "__id__": 105
       }
     ],
     "_prefab": {
-      "__id__": 105
+      "__id__": 107
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -101,10 +101,13 @@
       },
       {
         "__id__": 93
+      },
+      {
+        "__id__": 102
       }
     ],
     "_prefab": {
-      "__id__": 102
+      "__id__": 104
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1677,6 +1680,7 @@
       "__expectedType__": "cc.SpriteFrame"
     },
     "autoCollapseOnSelect": false,
+    "hideOnLoad": true,
     "_id": ""
   },
   {
@@ -1941,7 +1945,7 @@
     "tapToCollapseNode": {
       "__id__": 95
     },
-    "defaultExpand": true,
+    "defaultExpand": false,
     "_id": ""
   },
   {
@@ -2110,6 +2114,25 @@
     "nestedPrefabInstanceRoots": null
   },
   {
+    "__type__": "cc.UIOpacity",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 103
+    },
+    "_opacity": 255,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "f3y/BMH/ZJu6Q/s/YuFblL"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -2132,7 +2155,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 104
+      "__id__": 106
     },
     "_contentSize": {
       "__type__": "cc.Size",

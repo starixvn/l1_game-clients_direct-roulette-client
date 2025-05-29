@@ -69,6 +69,9 @@ export default class VerticalSlidingChip extends ObserverComponent {
     @property
     autoCollapseOnSelect = false; // New property to control collapse behavior
 
+    @property
+    hideOnLoad = true; // New property to hide slide on load using opacity
+
     public chipValues: number[] = [];
     protected smallChipScale = 0.29;
     protected chipList: Node[] = [];
@@ -95,6 +98,11 @@ export default class VerticalSlidingChip extends ObserverComponent {
         this.isExpanded = false;
         this.expandableNode?.collapse(false);
         
+        // Hide slide on load using opacity if configured
+        if (this.hideOnLoad) {
+            this.hideExpandableNode();
+        }
+        
         // Hide arrows initially (vertical doesn't need them)
         this.setTopButtonStatus(false);
         this.setBottomButtonStatus(false);
@@ -102,9 +110,7 @@ export default class VerticalSlidingChip extends ObserverComponent {
         this.snappedScrollView.actionScrollEnded = () => {
             this.updateSelectChip();
         };
-
-        // Spacing and padding are now controlled by VerticalSnapScrollView properties
-
+        
         // Set up current chip display click handler
         if (this.currentChipDisplay) {
             this.currentChipDisplay.on("click", this.onToggleExpansion.bind(this));
@@ -412,7 +418,6 @@ export default class VerticalSlidingChip extends ObserverComponent {
      * Toggle expansion/collapse of the chip list
      */
     public onToggleExpansion() {
-        this.playSoundClick();
         this.isExpanded = !this.isExpanded;
         
         if (this.isExpanded) {
@@ -426,6 +431,11 @@ export default class VerticalSlidingChip extends ObserverComponent {
      * Expand the chip list
      */
     public expand() {
+        // Restore opacity if it was hidden on load
+        if (this.hideOnLoad) {
+            this.showExpandableNode();
+        }
+        
         this.isExpanded = true;
         this.expandableNode?.expand();
         this.updateArrowVisibility(this.currentSelectChip);
@@ -470,6 +480,33 @@ export default class VerticalSlidingChip extends ObserverComponent {
     public setExpanded(expanded: boolean) {
         if (expanded !== this.isExpanded) {
             this.onToggleExpansion();
+        }
+    }
+
+    /**
+     * Hide the expandable node by setting its opacity to 0
+     */
+    private hideExpandableNode() {
+        this.setExpandableNodeOpacity(0);
+    }
+
+    /**
+     * Show the expandable node by setting its opacity to 255
+     */
+    private showExpandableNode() {
+        this.setExpandableNodeOpacity(255);
+    }
+
+    /**
+     * Set the opacity of the expandable node
+     * @param opacity - The opacity value (0-255)
+     */
+    private setExpandableNodeOpacity(opacity: number) {
+        if (!this.expandableNode) return;
+        
+        const uiOpacity = this.expandableNode.node.getComponent("UIOpacity");
+        if (uiOpacity) {
+            uiOpacity["opacity"] = opacity;
         }
     }
 }
