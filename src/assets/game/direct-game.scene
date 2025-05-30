@@ -4325,11 +4325,11 @@
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 2
+      "__id__": 9
     },
     "component": "",
-    "_componentId": "261c1vtUuNOyb8QB/gs7OVO",
-    "handler": "switchToSideBet",
+    "_componentId": "1962bH8l/hI1Jrw0X6eNrDs",
+    "handler": "switchToMainBet",
     "customEventData": ""
   },
   {
@@ -4408,10 +4408,10 @@
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 2
+      "__id__": 9
     },
     "component": "",
-    "_componentId": "261c1vtUuNOyb8QB/gs7OVO",
+    "_componentId": "1962bH8l/hI1Jrw0X6eNrDs",
     "handler": "switchToSideBet",
     "customEventData": ""
   },

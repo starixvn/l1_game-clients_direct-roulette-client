@@ -68,7 +68,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "side-bet",
+    "_name": "to-side-bet",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -296,7 +296,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "main-bet",
+    "_name": "to-main-bet",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
