@@ -6,17 +6,10 @@ const { makeAutoObservable } = mobx;
 
 @injectable()
 export class RouletteGameConfigStore {
-    private _multipliers : Array<number>;
-
+    // Roulette currently doesn't require game-specific configurations
+    // This store is kept for consistency and potential future expansion
+    
     constructor() {
         makeAutoObservable(this);
-    }
-
-    get multipliers() {
-        return this._multipliers;
-    }
-
-    set multipliers(multipliers: Array<number>) {
-        this._multipliers = multipliers;
     }
 }

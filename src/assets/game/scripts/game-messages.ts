@@ -7,8 +7,6 @@ export namespace GameServiceMessage {
     }
 
     export class RouletteGameConfigs {
-        multipliers: Array<number>;
-
         static eventName = "gameConfigs";
     }
 

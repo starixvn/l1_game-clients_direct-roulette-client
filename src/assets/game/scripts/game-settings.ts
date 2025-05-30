@@ -8,6 +8,7 @@ export const settings = {
     id: 21,
     name: "Roulette",
     namespaces: ["Roulette"],
+    observerNamespace: "Roulette",
     durations: {
         wholeRound: 59,
         lockingBet: 5,
