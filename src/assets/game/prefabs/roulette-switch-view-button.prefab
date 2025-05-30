@@ -40,7 +40,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -397.773,
-      "y": -501.81100000000004,
+      "y": -531.811,
       "z": 0
     },
     "_lrot": {
@@ -68,7 +68,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "quick-bet",
+    "_name": "side-bet",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -595,6 +595,7 @@
       "__id__": 0
     },
     "fileId": "fcOqBr3MlM17zqCXIzlFzF",
+    "instance": null,
     "targetOverrides": null
   }
 ]
