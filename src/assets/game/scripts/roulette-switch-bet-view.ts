@@ -29,242 +29,202 @@ export class RouletteSwitchBetView extends Component {
     @property(Node)
     switchViewBackground: Node = null;
 
-    // Private variables to store original positions
+    // Private variables
     private prevSideBetPosition = new Vec3();
     private prevMainBetPosition = new Vec3();
     private isInSideBetView = false;
-    private currentRoundState = "";
-    private currentCountdownTimer = 0;
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
+    }
 
     // Callback for rearranging UI elements
     public rearrangeIndexCallback = (type: number) => { };
 
     start() {
         this.initializeUI();
+        this.setupButtonListeners();
     }
 
     private initializeUI() {
         // Show main bet by default, hide side bet
-        this.toSideBetButton.active = true;   // Show side bet button (to switch TO side bet)
-        this.toMainBetButton.active = false;  // Hide main bet button (already in main bet view)
+        this.updateButtonVisibility(false);
         this.sideBetNode.active = false;
         this.switchViewBackground.active = false;
 
         // Store original positions
         this.prevSideBetPosition = this.sideBetNode.position.clone();
         this.prevMainBetPosition = this.mainBetNode.position.clone();
-
-        // Set up button listeners
-        this.setupButtonListeners();
     }
 
     private setupButtonListeners() {
-        // Side bet button (switches to side bet) - with null checks
-        if (this.toSideBetButton) {
-            const sideBetButtonComp = this.toSideBetButton.getComponent(Button);
-            if (sideBetButtonComp) {
-                sideBetButtonComp.node.on('click', this.switchToSideBet, this);
-            }
-        }
+        this.setupButtonListener(this.toSideBetButton, this.switchToSideBet);
+        this.setupButtonListener(this.toMainBetButton, this.switchToMainBet);
+    }
 
-        // Main bet button (switches to main bet) - with null checks
-        if (this.toMainBetButton) {
-            const mainBetButtonComp = this.toMainBetButton.getComponent(Button);
-            if (mainBetButtonComp) {
-                mainBetButtonComp.node.on('click', this.switchToMainBet, this);
+    private setupButtonListener(buttonNode: Node, callback: () => void) {
+        if (buttonNode) {
+            const buttonComp = buttonNode.getComponent(Button);
+            if (buttonComp) {
+                buttonComp.node.on('click', callback, this);
             }
         }
+    }
+
+    private updateButtonVisibility(showSideBetView: boolean) {
+        this.toSideBetButton.active = !showSideBetView;
+        this.toMainBetButton.active = showSideBetView;
     }
 
     /**
-     * React to countdown timer changes - same as bet-timer.ts
-     * This will help us detect when we're approaching lock time
+     * Centralized betting state management using timer-based logic
+     * Matches the RouletteTimeHandler and GameBaseTimeHandler pattern exactly
      */
-    @render(RoundTimeStore, (store) => store.countdownTimer)
-    onCountdownTimerChanged(time: number) {
-        this.currentCountdownTimer = time;
-        this.checkLockingTime();
-    }
-
-    /**
-     * React to round state changes - same as bet-timer.ts  
-     * This will tell us the current phase of the game
-     */
-    @render(RoundTimeStore, (store) => store.roundState)
-    onRoundStateChanged(state: string) {
-        this.currentRoundState = state;
-        this.handleStateChange(state);
-    }
-
-    /**
-     * React to round time state changes - same as bet-timer.ts
-     * This tells us if we're in the active betting period
-     */
-    @render(RoundTimeStore, (store) => store.isInRoundTime)
-    onRoundTimeStateChanged(isInRoundTime: boolean) {
-        if (isInRoundTime) {
-            // Re-enable side bet switching during betting phase
-            this.enableSideBet(true);
-        } else {
-            // Disable side bet switching when not in round time
-            this.enableSideBet(false);
-            if (this.isInSideBetView) {
-                this.switchToMainBet();
-            }
-        }
-    }
-
-    private checkLockingTime() {
-        // Check if we're at or below the locking time (5 seconds from settings.durations.lockingBet)
-        if (this.currentCountdownTimer <= settings.durations.lockingBet) {
-            // Auto-switch to main bet when reaching lock time
-            if (this.isInSideBetView) {
-                this.switchToMainBet();
-            }
-            // Disable side bet switching
-            this.enableSideBet(false);
-        }
-    }
-
-    private handleStateChange(state: string) {
-        // Handle different round states
-        // You might need to adjust these state names based on your game's actual states
-        const lockingStates = ['locking', 'locked', 'spinning', 'settling'];
-        const bettingStates = ['betting', 'placingBet', 'accepting'];
+    @render(RoundTimeStore, (store) => ({ 
+        countdownTimer: store.countdownTimer, 
+        isInRoundTime: store.isInRoundTime
+    }))
+    onBettingStateChanged({ countdownTimer, isInRoundTime }: { 
+        countdownTimer: number, 
+        isInRoundTime: boolean
+    }) {
+        const isBettingAllowed = this.isBettingAllowed(countdownTimer, isInRoundTime);
         
-        if (lockingStates.some(s => state?.toLowerCase().includes(s.toLowerCase()))) {
-            // In locking/locked state - switch to main bet and disable
-            if (this.isInSideBetView) {
-                this.switchToMainBet();
-            }
-            this.enableSideBet(false);
-        } else if (bettingStates.some(s => state?.toLowerCase().includes(s.toLowerCase()))) {
-            // In betting state - enable side bet switching
-            this.enableSideBet(true);
+        // Auto-switch to main bet when betting becomes disabled
+        if (!isBettingAllowed && this.isInSideBetView) {
+            this.switchToMainBet();
         }
+        
+        // Update button interactability
+        this.enableSideBet(isBettingAllowed);
     }
 
-    public enableSideBet(enable: boolean) {
-        // Safer Button component access with null checks
+    /**
+     * Centralized logic to determine if betting is allowed
+     * Uses the same timer-based logic as GameBaseTimeHandler and RouletteTimeHandler
+     */
+    private isBettingAllowed(countdownTimer: number, isInRoundTime: boolean): boolean {
+        // Timer constraint: Same as GameBaseTimeHandler.isInLockBetTime
+        // This matches RouletteTimeHandler's handleAtLockBetTime/handleInLockBetTime logic
+        if (countdownTimer <= settings.durations.lockingBet) {
+            return false;
+        }
+
+        // Round time constraint: Same as GameBaseTimeHandler.isInRoundTime
+        if (!isInRoundTime) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private enableSideBet(enable: boolean) {
         if (this.toMainBetButton) {
             const buttonComp = this.toMainBetButton.getComponent(Button);
             if (buttonComp) {
                 buttonComp.interactable = enable;
             }
 
-            // Handle disable sprite (assuming it's the 3rd child)
-            if (this.toMainBetButton.parent && this.toMainBetButton.parent.children.length > 2) {
-                const disableSprite = this.toMainBetButton.parent.children[2];
-                if (disableSprite) {
-                    disableSprite.active = !enable;
-                }
+            // Handle disable sprite
+            this.toggleDisableSprite(this.toMainBetButton, !enable);
+        }
+    }
+
+    private toggleDisableSprite(buttonNode: Node, show: boolean) {
+        if (buttonNode.parent && buttonNode.parent.children.length > 2) {
+            const disableSprite = buttonNode.parent.children[2];
+            if (disableSprite) {
+                disableSprite.active = show;
             }
         }
     }
 
-    public switchToSideBet() {
-        if (this.isInSideBetView) return;
-
-        // Safer Button component access with null checks
-        if (!this.toMainBetButton) {
-            return;
+    private canSwitchToSideBet(): boolean {
+        // Validate required nodes
+        if (!this.toMainBetButton || !this.sideBetNode || !this.mainBetNode || !this.smallMainBetNode) {
+            return false;
         }
 
+        // Check button interactability
         const buttonComp = this.toMainBetButton.getComponent(Button);
-        if (!buttonComp) {
+        return buttonComp?.interactable === true;
+    }
+
+    public switchToSideBet() {
+        if (this.isInSideBetView || !this.canSwitchToSideBet()) {
             return;
         }
 
-        if (!buttonComp.interactable) {
-            return; // Don't allow switching if disabled by timer
-        }
-
-        // Additional check: don't allow switching if we're in lock time
-        if (this.currentCountdownTimer <= settings.durations.lockingBet) {
-            return;
-        }
-
-        // Additional safety checks for required nodes
-        if (!this.sideBetNode || !this.mainBetNode || !this.smallMainBetNode) {
-            return;
-        }
+        // Play click sound
+        this.playSoundClick();
 
         this.isInSideBetView = true;
-        
-        // Play click sound (if audio manager is available)
-        // AudioManager.getInstance().playClick();
-
-        // Update button states
-        this.toSideBetButton.active = false;  // Hide side bet button (already in side bet view)
-        this.toMainBetButton.active = true;   // Show main bet button (to switch TO main bet)
+        this.updateButtonVisibility(true);
         this.switchViewBackground.active = true;
         this.sideBetNode.active = true;
 
-        // Position side bet node and prepare for animation
-        this.sideBetNode.setPosition(this.sideBetNode.position.x, this.smallMainBetNode.position.y, this.sideBetNode.position.z);
-        this.sideBetNode.scale = new Vec3(0, 0, 1);
-
-        // Trigger callback for index rearrangement
+        // Setup and animate
+        this.setupSideBetAnimation();
         this.rearrangeIndexCallback(1);
-
-        // Stop all ongoing animations
-        tween(this.sideBetNode).stop();
-        tween(this.mainBetNode).stop();
-
-        // Animate side bet node in
-        tween(this.sideBetNode)
-            .to(0.3, {
-                scale: new Vec3(1, 1, 1),
-                position: this.prevSideBetPosition
-            }, { easing: 'circInOut' })
-            .start();
-
-        // Animate main bet node out (scale down and move)
-        tween(this.mainBetNode)
-            .to(0.3, {
-                scale: new Vec3(0.627, 0.627, 1),
-                position: this.smallMainBetNode.position
-            }, { easing: 'circInOut' })
-            .start();
     }
 
     public switchToMainBet() {
         if (!this.isInSideBetView) return;
 
+        // Play click sound
+        this.playSoundClick();
+
         this.isInSideBetView = false;
-
-        // Clear any highlights on the main bet board
-        // this.board?.clearHighlight();
-
-        // Play click sound (if audio manager is available)
-        // AudioManager.getInstance().playClick();
-
-        // Update button states
-        this.toSideBetButton.active = true;   // Show side bet button (to switch TO side bet)
-        this.toMainBetButton.active = false;  // Hide main bet button (already in main bet view)
+        this.updateButtonVisibility(false);
         this.switchViewBackground.active = false;
 
-        // Trigger callback for index rearrangement
+        // Setup and animate
+        this.setupMainBetAnimation();
         this.rearrangeIndexCallback(0);
+    }
 
-        // Stop all ongoing animations
+    private setupSideBetAnimation() {
+        // Position and prepare for animation
+        this.sideBetNode.setPosition(
+            this.sideBetNode.position.x, 
+            this.smallMainBetNode.position.y, 
+            this.sideBetNode.position.z
+        );
+        this.sideBetNode.scale = new Vec3(0, 0, 1);
+
+        // Stop ongoing animations and start new ones
+        this.stopAllAnimations();
+        this.animateNodeTransition(
+            this.sideBetNode,
+            { scale: new Vec3(1, 1, 1), position: this.prevSideBetPosition }
+        );
+        this.animateNodeTransition(
+            this.mainBetNode,
+            { scale: new Vec3(0.627, 0.627, 1), position: this.smallMainBetNode.position }
+        );
+    }
+
+    private setupMainBetAnimation() {
+        this.stopAllAnimations();
+        this.animateNodeTransition(
+            this.sideBetNode,
+            { scale: new Vec3(0, 0, 1), position: this.smallMainBetNode.position }
+        );
+        this.animateNodeTransition(
+            this.mainBetNode,
+            { scale: new Vec3(1, 1, 1), position: this.prevMainBetPosition }
+        );
+    }
+
+    private stopAllAnimations() {
         tween(this.sideBetNode).stop();
         tween(this.mainBetNode).stop();
+    }
 
-        // Animate side bet node out
-        tween(this.sideBetNode)
-            .to(0.3, {
-                scale: new Vec3(0, 0, 1),
-                position: this.smallMainBetNode.position
-            }, { easing: 'circInOut' })
-            .start();
-
-        // Animate main bet node back in
-        tween(this.mainBetNode)
-            .to(0.3, {
-                scale: new Vec3(1, 1, 1),
-                position: this.prevMainBetPosition
-            }, { easing: 'circInOut' })
+    private animateNodeTransition(node: Node, target: { scale?: Vec3, position?: Vec3 }) {
+        tween(node)
+            .to(0.3, target, { easing: 'circInOut' })
             .start();
     }
 
