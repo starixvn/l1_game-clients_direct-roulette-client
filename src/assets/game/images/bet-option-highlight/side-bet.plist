@@ -15,7 +15,7 @@
                 <key>spriteSourceSize</key>
                 <string>{109,109}</string>
                 <key>textureRect</key>
-                <string>{{115,3},{109,109}}</string>
+                <string>{{3,115},{109,109}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -30,9 +30,9 @@
                 <key>spriteSourceSize</key>
                 <string>{106,93}</string>
                 <key>textureRect</key>
-                <string>{{3,219},{106,93}}</string>
+                <string>{{109,334},{106,93}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>bet-option-11.png</key>
             <dict>
@@ -45,9 +45,9 @@
                 <key>spriteSourceSize</key>
                 <string>{91,63}</string>
                 <key>textureRect</key>
-                <string>{{3,392},{91,63}}</string>
+                <string>{{3,442},{91,63}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>bet-option-23.png</key>
             <dict>
@@ -60,7 +60,7 @@
                 <key>spriteSourceSize</key>
                 <string>{83,98}</string>
                 <key>textureRect</key>
-                <string>{{111,305},{83,98}}</string>
+                <string>{{395,3},{83,98}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -75,7 +75,7 @@
                 <key>spriteSourceSize</key>
                 <string>{96,76}</string>
                 <key>textureRect</key>
-                <string>{{3,314},{96,76}}</string>
+                <string>{{395,88},{96,76}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -92,7 +92,7 @@
                 <key>textureRect</key>
                 <string>{{3,3},{108,110}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>bet-option-30.png</key>
             <dict>
@@ -105,9 +105,9 @@
                 <key>spriteSourceSize</key>
                 <string>{99,83}</string>
                 <key>textureRect</key>
-                <string>{{111,220},{99,83}}</string>
+                <string>{{221,3},{99,83}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>bet-option-5.png</key>
             <dict>
@@ -120,9 +120,9 @@
                 <key>spriteSourceSize</key>
                 <string>{106,104}</string>
                 <key>textureRect</key>
-                <string>{{3,113},{106,104}}</string>
+                <string>{{3,334},{106,104}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>bet-option-8.png</key>
             <dict>
@@ -135,9 +135,174 @@
                 <key>spriteSourceSize</key>
                 <string>{106,104}</string>
                 <key>textureRect</key>
-                <string>{{111,114},{106,104}}</string>
+                <string>{{109,226},{106,104}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>winning-bet-option-0.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{106,106}</string>
+                <key>spriteSourceSize</key>
+                <string>{106,106}</string>
+                <key>textureRect</key>
+                <string>{{113,3},{106,106}}</string>
                 <key>textureRotated</key>
                 <false/>
+            </dict>
+            <key>winning-bet-option-10.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{87,98}</string>
+                <key>spriteSourceSize</key>
+                <string>{87,98}</string>
+                <key>textureRect</key>
+                <string>{{306,3},{87,98}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>winning-bet-option-11.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{87,59}</string>
+                <key>spriteSourceSize</key>
+                <string>{87,59}</string>
+                <key>textureRect</key>
+                <string>{{96,442},{87,59}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>winning-bet-option-23.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{79,95}</string>
+                <key>spriteSourceSize</key>
+                <string>{79,95}</string>
+                <key>textureRect</key>
+                <string>{{309,103},{79,95}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>winning-bet-option-24.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{94,72}</string>
+                <key>spriteSourceSize</key>
+                <string>{94,72}</string>
+                <key>textureRect</key>
+                <string>{{309,200},{94,72}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>winning-bet-option-26.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{102,90}</string>
+                <key>spriteSourceSize</key>
+                <string>{102,90}</string>
+                <key>textureRect</key>
+                <string>{{215,216},{102,90}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>winning-bet-option-3.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{104,106}</string>
+                <key>spriteSourceSize</key>
+                <string>{104,106}</string>
+                <key>textureRect</key>
+                <string>{{3,226},{104,106}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>winning-bet-option-30.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{95,79}</string>
+                <key>spriteSourceSize</key>
+                <string>{95,79}</string>
+                <key>textureRect</key>
+                <string>{{390,166},{95,79}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>winning-bet-option-32.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{99,90}</string>
+                <key>spriteSourceSize</key>
+                <string>{99,90}</string>
+                <key>textureRect</key>
+                <string>{{217,111},{99,90}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>winning-bet-option-5.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{103,101}</string>
+                <key>spriteSourceSize</key>
+                <string>{103,101}</string>
+                <key>textureRect</key>
+                <string>{{114,111},{103,101}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>winning-bet-option-8.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{102,100}</string>
+                <key>spriteSourceSize</key>
+                <string>{102,100}</string>
+                <key>textureRect</key>
+                <string>{{204,334},{102,100}}</string>
+                <key>textureRotated</key>
+                <true/>
             </dict>
         </dict>
         <key>metadata</key>
@@ -151,9 +316,9 @@
             <key>realTextureFileName</key>
             <string>side-bet.webp</string>
             <key>size</key>
-            <string>{256,512}</string>
+            <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:46ac562604f9f5fffd3b0cfb2b788364:c30d72cdc1134344815eea8f7797c55e:8547e11ee02495014f5ca551807dc454$</string>
+            <string>$TexturePacker:SmartUpdate:38047014f61ea6a6cb44ad3d707a8428:6b872b9afea06e06b5fe98aedb1af368:8547e11ee02495014f5ca551807dc454$</string>
             <key>textureFileName</key>
             <string>side-bet.webp</string>
         </dict>

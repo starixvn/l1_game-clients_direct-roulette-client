@@ -5,6 +5,9 @@ import { startGame } from "db://shared-components/shared/scripts/startup";
 import Observer from "observer";
 import { siteConfigs } from "../../../scripts/site-configs";
 import { containerOptions, settings } from "../game-settings";
+import { RouletteBoard } from "../roulette-bet-options/roulette-board";
+import { IRouletteBetInfo, IBetChoices } from "../roulette-choices";
+import RouletteUtils from "../roulette-utils";
 import "./../../../resources/i18n";
 
 const { RoundHistories } = gc;
@@ -23,13 +26,22 @@ export class roulette_game extends GameComponent {
 
     @property({ type: Label, override: true, visible: false })
     lblMaxBet: Label = null;
+
+    @property(RouletteBoard)
+    rouletteBoard: RouletteBoard = null;
     
     override namespace = settings.name;
     override containerOptions = containerOptions;
 
+    // Bet management
+    private tempBetChoices: IBetChoices = {};
+    private currentBetChoices: IBetChoices = {};
+    private currentBet: number = 100; // Default bet amount
+
     onLoad() {
         super.onLoad();
-        console.log('🎰 Roulette Game - initialized');
+        
+        console.log('🎰 Roulette Game - initialized with betting system');
     }
 }
 
