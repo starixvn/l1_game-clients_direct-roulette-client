@@ -17,9 +17,9 @@ startGame(settings.name, containerOptions, siteConfigs, settings.namespaces);
 const { ccclass, property } = _decorator;
 const { observer } = Observer;
 
-@ccclass('roulette_game')
+@ccclass('RouletteGame')
 @observer(settings.name)
-export class roulette_game extends GameComponent {
+export class RouletteGame extends GameComponent {
     
     @property({ type: Label, override: true, visible: false })
     lblMinBet: Label = null;

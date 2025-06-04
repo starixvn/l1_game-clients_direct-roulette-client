@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, Node, Label, Sprite, SpriteFrame, Prefab, instantiate } from 'cc';
+import { _decorator, Node, Label, Sprite, SpriteFrame, Prefab, instantiate, tween, UIOpacity } from 'cc';
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
 import RouletteUtils from './roulette-utils';
@@ -13,6 +13,9 @@ export class RouletteRoundHistory extends ObserverComponent {
     @property(Node)
     content: Node = null;
 
+    @property(Node)
+    highlight: Node = null;
+
     @property(Prefab)
     resultNodePrefab: Prefab = null;
 
@@ -24,38 +27,41 @@ export class RouletteRoundHistory extends ObserverComponent {
 
     private resultNodes: Node[] = [];
     private maxResults = 8;
+    private lastRoundId: number | null = null;
+    private highlightAnimation: any = null;
+    private isInitialLoad = true;
 
-    @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
+    @render(gc.RoundHistories.RoundHistoryStore, (store) => {
+        console.log('=== Store State Debug ===');
+        if (store.histories && store.histories.length > 0) {
+            console.log('Latest round - ID:', store.histories[0]?.roundId, 'Result:', store.histories[0]?.result);
+        }
+        return store.histories;
+    })
     updateRoundHistory(histories: gc.RoundHistories.RoundHistory[]) {
+        console.log('=== UpdateRoundHistory Called ===');
+        
+        if (histories && histories.length > 0) {
+            console.log('Latest round - ID:', histories[0]?.roundId, 'Result:', histories[0]?.result, 'Type:', typeof histories[0]?.result);
+            console.log('First few rounds:', histories.slice(0, 3).map(h => `ID: ${h.roundId}, Result: ${h.result}`));
+        }
+        
         this.displayHistories(histories);
+        this.updateHighlight(histories);
     }
 
     private displayHistories(histories: gc.RoundHistories.RoundHistory[]) {
         if (!histories || histories.length === 0) {
             this.clearDisplay();
+            this.hideHighlight();
             return;
         }
 
-        // Extract numbers from round history - result is always a number for roulette
-        const numbers = histories
-            .map(history => history.result as number)
-            .filter(num => num !== null && num !== undefined);
-
-        this.displayNumbers(numbers);
-    }
-
-    /**
-     * Display array of numbers in the result nodes
-     * Dynamically creates/destroys nodes as needed
-     */
-    private displayNumbers(numbers: number[]) {
-        // Clear existing nodes
         this.clearDisplay();
-
-        // Take up to maxResults numbers (newest first from gc)
+        
+        const numbers = histories.map(history => history.result as number);
         const numbersToShow = numbers.slice(0, this.maxResults);
         
-        // Create and display nodes for each number
         numbersToShow.forEach((number, index) => {
             const resultNode = this.createResultNode(number, index);
             if (resultNode) {
@@ -64,51 +70,103 @@ export class RouletteRoundHistory extends ObserverComponent {
         });
     }
 
-    /**
-     * Create a single result node for a number
-     */
+    private updateHighlight(histories: gc.RoundHistories.RoundHistory[]) {
+        const newRound = histories && histories.length > 0 ? histories[0] : null;
+        if (!newRound) return;
+
+        const isNewRound = newRound.roundId !== this.lastRoundId;
+        
+        if (this.isInitialLoad) {
+            this.showStaticHighlight();
+            this.lastRoundId = newRound.roundId;
+            this.isInitialLoad = false;
+        } else if (isNewRound) {
+            this.showAnimatedHighlight();
+            this.lastRoundId = newRound.roundId;
+        }
+    }
+
     private createResultNode(number: number, index: number): Node | null {
         if (!this.resultNodePrefab || !this.content) {
             console.error('Missing resultNodePrefab or content node');
             return null;
         }
 
-        // Instantiate the prefab
         const resultNode = instantiate(this.resultNodePrefab);
         resultNode.name = `result-${index + 1}`;
         
-        // Set the number and sprite
-        this.setResultNode(resultNode, number);
-        
-        // Add to content (position will be handled by layout if using one)
-        this.content.addChild(resultNode);
-        
-        return resultNode;
-    }
-
-    /**
-     * Set a single result node with number and sprite
-     */
-    private setResultNode(node: Node, number: number) {
         // Set number text
-        const txtNode = node.getChildByName('txt');
+        const txtNode = resultNode.getChildByName('txt');
         const label = txtNode?.getComponent(Label);
         if (label) {
             label.string = number.toString();
         }
 
-        // Set color sprite - simplified logic
-        const sprite = node.getComponent(Sprite);
+        // Set color sprite
+        const sprite = resultNode.getComponent(Sprite);
         if (sprite) {
-            sprite.spriteFrame = (number !== 0 && RouletteUtils.isRed(number)) 
-                ? this.redSprite 
-                : this.blackSprite;
+            const isRed = (number !== 0 && RouletteUtils.isRed(number));
+            sprite.spriteFrame = isRed ? this.redSprite : this.blackSprite;
+        }
+        
+        this.content.addChild(resultNode);
+        return resultNode;
+    }
+
+    private showStaticHighlight() {
+        if (!this.highlight) return;
+        
+        this.stopHighlightAnimation();
+        this.highlight.active = true;
+    }
+
+    private showAnimatedHighlight() {
+        if (!this.highlight) return;
+        
+        this.stopHighlightAnimation();
+        this.highlight.active = true;
+        this.startHighlightAnimation();
+    }
+
+    private startHighlightAnimation() {
+        let uiOpacity = this.highlight.getComponent(UIOpacity);
+        if (!uiOpacity) {
+            uiOpacity = this.highlight.addComponent(UIOpacity);
+        }
+        
+        const fadeSequence = tween(uiOpacity)
+            .to(0.2, { opacity: 0 })
+            .to(0.2, { opacity: 255 })
+            .union();
+        
+        this.highlightAnimation = tween(uiOpacity)
+            .repeat(4, fadeSequence)
+            .call(() => {
+                uiOpacity.opacity = 255;
+                this.highlightAnimation = null;
+            })
+            .start();
+    }
+
+    private stopHighlightAnimation() {
+        if (this.highlightAnimation) {
+            this.highlightAnimation.stop();
+            this.highlightAnimation = null;
+        }
+        
+        const uiOpacity = this.highlight?.getComponent(UIOpacity);
+        if (uiOpacity) {
+            uiOpacity.opacity = 255;
         }
     }
 
-    /**
-     * Clear all displays and destroy nodes
-     */
+    private hideHighlight() {
+        if (this.highlight) {
+            this.stopHighlightAnimation();
+            this.highlight.active = false;
+        }
+    }
+
     private clearDisplay() {
         this.resultNodes.forEach(node => {
             if (node && node.isValid) {
@@ -119,7 +177,6 @@ export class RouletteRoundHistory extends ObserverComponent {
     }
 
     onDestroy() {
-        // Clean up when component is destroyed
         this.clearDisplay();
     }
 }

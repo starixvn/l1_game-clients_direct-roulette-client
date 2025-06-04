@@ -73,21 +73,12 @@ export class RouletteBoard extends Component {
         // Calculate relative position from grid start
         const gridPosition = this.gridStartNode.getPosition();
         
-        console.log("gridPosition type:", typeof gridPosition, gridPosition);
-        console.log("localLocation type:", typeof localLocation, localLocation);
-
-        // debugger;
-        
         // Try manual subtraction instead of .subtract() method
         const location = new Vec3(
             Math.abs(localLocation.x - gridPosition.x),
             Math.abs(localLocation.y - gridPosition.y),
             0
         );
-
-        console.log("localLocation", "x: " + localLocation.x, "y: " + localLocation.y);
-        console.log("gridStartNode", "x: " + this.gridStartNode.getPosition().x, "y: " + this.gridStartNode.getPosition().y);
-        console.log("location", "x: " + location.x, "y: " + location.y);
 
         if (location.x < 0 && location.y < 0) {
             this.clearHighlight();
@@ -127,8 +118,6 @@ export class RouletteBoard extends Component {
     getBetInfo(location: Vec2): IRouletteBetInfo {
         const col = Math.floor(location.x / this.cellSize.width);
         const row = Math.floor(location.y / this.cellSize.height);
-
-        console.log("col: ", col, "row: ", row);
 
         const offsetX = location.x - col * this.cellSize.width;
         const offsetY = location.y - row * this.cellSize.height;
