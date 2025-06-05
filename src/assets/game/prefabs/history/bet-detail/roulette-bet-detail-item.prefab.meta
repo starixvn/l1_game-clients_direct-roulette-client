@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "3e482741-f39b-4235-a770-65ac63d4619f",
+  "uuid": "c889f1fa-c46a-4087-b713-b76c59dfb342",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "bet-detail-result-body"
+    "syncNodeName": "roulette-bet-detail-item"
   }
 }

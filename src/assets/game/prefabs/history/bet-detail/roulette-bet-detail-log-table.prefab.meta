@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "41ac7bd2-c2ef-4136-86f8-62dc7175e367",
+  "uuid": "b514de22-b270-459e-a196-b8080e2c268c",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "bet-history-seven-up-down-body-item"
+    "syncNodeName": "roulette-bet-detail-log-table"
   }
 }
