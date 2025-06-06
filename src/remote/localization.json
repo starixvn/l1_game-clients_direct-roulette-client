@@ -1,4 +1,11 @@
 {
     "lobbyNames": {},
-    "gameNames": {}
+    "gameNames": {
+        "en": "Roulette",
+        "id": "Rolet",
+        "th": "กมรูเล็ต",
+        "vi": "Roulette",
+        "zh_cn": "轮盘",
+        "zh_tw": "輪盤"
+    }
 }
