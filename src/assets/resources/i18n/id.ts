@@ -231,6 +231,7 @@ export const languages = {
         "game_name": "Rolet",
         "type_4number": "Empat angka",
         "type_big_small": "Besar/Kecil",
+        "type_column": "Kolom",
         "type_dozen": "Dozen",
         "type_line": "Line",
         "type_odd_even": "Ganjil/Genap",

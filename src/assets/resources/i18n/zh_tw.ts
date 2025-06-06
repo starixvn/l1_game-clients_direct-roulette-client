@@ -231,6 +231,7 @@ export const languages = {
         "game_name": "輪盤",
         "type_4number": "四位數",
         "type_big_small": "大/小",
+        "type_column": "列",
         "type_dozen": "一打",
         "type_line": "線",
         "type_odd_even": "單/雙",

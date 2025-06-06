@@ -231,6 +231,7 @@ export const languages = {
         "game_name": "Roulette",
         "type_4number": "Four number",
         "type_big_small": "Big/Small",
+        "type_column": "Column",
         "type_dozen": "Dozen",
         "type_line": "Line",
         "type_odd_even": "Odd/Even",
