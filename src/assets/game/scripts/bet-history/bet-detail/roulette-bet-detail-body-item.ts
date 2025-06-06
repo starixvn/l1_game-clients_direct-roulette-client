@@ -1,11 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Color, Component, Label, Node } from 'cc';
-import BetDetailLogItem, { GameRoundBetDetailsLog } from 'db://shared-components/game/bet-history/scripts/components/bet-detail/bet-detail-log-item';
-import { BetDetailLogItemType } from 'db://shared-components/game/bet-history/scripts/components/bet-detail/bet-detail-log-item';
-import { BetChoice } from '../../seven-up-down-choices';
-import BetDetailDirectBodyItem from 'db://direct-shared-components/bet-history/scripts/bet-detail-direct-body-item';
+import { BaseBetDetailLogItem, BetDetailLogItemType } from 'db://shared-components/game/bet-history/scripts/components/bet-detail/bet-detail-log-item';
 import { RouletteBetType } from "../../roulette-choices";
-import { BaseBetDetailLogItem } from "db://shared-components/game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
 
 const { Translator, FormatUtils } = gc;
 const { ccclass, property } = _decorator;
@@ -21,19 +17,28 @@ export class RouletteBetDetailBodyItem extends BaseBetDetailLogItem {
     @property(Label)
     lblAmount: Label = null;
 
-    setData(data: BetDetailLogItemType, betIndex: number = 0) {
-        super.setData(data);
+    @property(Label)
+    lblDate: Label = null;
 
-        debugger;
+    @property(Label)
+    lblHour: Label = null;
+
+    setData(data: BetDetailLogItemType) {
+        super.setData(data);
 
         const { betDetailsLog } = data;
         
-        // Extract all bet data from the structure
-        const allBets = this.extractAllBetData(betDetailsLog);
+        // Extract date and time information
+        const { time } = betDetailsLog as any;
+        if (time) {
+            const date = gc.DateTimeUtils.getStringDate(time);
+            const hour = gc.DateTimeUtils.getStringHourByTime(time);
+            this.lblDate && (this.lblDate.string = date);
+            this.lblHour && (this.lblHour.string = hour);
+        }
         
-        // Use the specified bet index, or default to first bet
-        const bet = allBets[betIndex] || { betType: "", choice: "", amount: 0 };
-        const { betType, choice, amount } = bet;
+        // Extract the single bet from this log (should contain only one bet type)
+        const { betType, choice, amount } = this.extractBetData(betDetailsLog);
         
         // Set the display values
         this.formatBetTypeDisplay(betType);
@@ -43,56 +48,71 @@ export class RouletteBetDetailBodyItem extends BaseBetDetailLogItem {
         if (amount > 0) {
             this.lblAmount.string = FormatUtils.numberWithCommas(amount, 2);
         }
-    }
-
-    // Helper method to get total number of bets in a log entry
-    getBetCount(data: BetDetailLogItemType): number {
-        const { betDetailsLog } = data;
-        return this.extractAllBetData(betDetailsLog).length;
-    }
-
-    private extractAllBetData(betDetailsLog: any): Array<{ betType: string, choice: string, amount: number }> {
-        const betTypes = Object.values(RouletteBetType);
-        const bets: Array<{ betType: string, choice: string, amount: number }> = [];
         
-        for (const type of betTypes) {
-            if (betDetailsLog[type]) {
-                const betData = betDetailsLog[type];
-                
-                // Get ALL choices for this bet type, not just the first one
-                for (const choice in betData) {
-                    const amount = betData[choice];
-                    bets.push({ betType: type, choice, amount });
+        // Check if this bet won and highlight it
+        const isWinning = this.checkIfBetWon(betType, choice, data);
+        this.setHighlightDetail(isWinning);
+    }
+
+    // Static method to split a multi-bet log into individual bet logs
+    static splitBetDetailLog(originalData: BetDetailLogItemType): Array<BetDetailLogItemType> {
+        const { betDetailsLog } = originalData;
+        const individualLogs: Array<BetDetailLogItemType> = [];
+        
+        for (const betType of Object.values(RouletteBetType)) {
+            if (betDetailsLog[betType]) {
+                for (const choice in betDetailsLog[betType]) {
+                    const amount = betDetailsLog[betType][choice];
+                    const newBetLog = {
+                        time: betDetailsLog.time,
+                        currency: betDetailsLog.currency,
+                        rate: betDetailsLog.rate,
+                        operatorId: betDetailsLog.operatorId,
+                        [betType]: { [choice]: amount }
+                    };
+                    
+                    individualLogs.push({
+                        ...originalData,
+                        betDetailsLog: newBetLog
+                    });
                 }
             }
         }
         
-        return bets;
+        return individualLogs;
     }
 
     private extractBetData(betDetailsLog: any): { betType: string, choice: string, amount: number } {
-        // For backward compatibility, return the first bet found
-        const allBets = this.extractAllBetData(betDetailsLog);
-        return allBets.length > 0 ? allBets[0] : { betType: "", choice: "", amount: 0 };
+        // Find first bet in the log
+        for (const betType of Object.values(RouletteBetType)) {
+            if (betDetailsLog[betType]) {
+                const betData = betDetailsLog[betType];
+                for (const choice in betData) {
+                    return { betType, choice, amount: betData[choice] };
+                }
+            }
+        }
+        return { betType: "", choice: "", amount: 0 };
     }
 
     private formatBetTypeDisplay(type: string) {
-        const betTypeNames: { [key: string]: string } = {
-            [RouletteBetType.StraightUp]: "Straight Up",
-            [RouletteBetType.Split]: "Split",
-            [RouletteBetType.Street]: "Street", 
-            [RouletteBetType.Triangle]: "Triangle",
-            [RouletteBetType.Corner]: "Corner",
-            [RouletteBetType.FourNumbers]: "Four Numbers",
-            [RouletteBetType.Line]: "Line",
-            [RouletteBetType.Column]: "Column",
-            [RouletteBetType.Dozen]: "Dozen",
-            [RouletteBetType.RedBlack]: "Red/Black",
-            [RouletteBetType.OddEven]: "Odd/Even",
-            [RouletteBetType.BigSmall]: "Big/Small"
+        const betTypeKeys: { [key: string]: string } = {
+            [RouletteBetType.StraightUp]: "type_straight_up",
+            [RouletteBetType.Split]: "type_split",
+            [RouletteBetType.Street]: "type_street", 
+            [RouletteBetType.Triangle]: "type_triangle",
+            [RouletteBetType.Corner]: "type_corner",
+            [RouletteBetType.FourNumbers]: "type_4number",
+            [RouletteBetType.Line]: "type_line",
+            [RouletteBetType.Column]: "type_column",
+            [RouletteBetType.Dozen]: "type_dozen",
+            [RouletteBetType.RedBlack]: "type_red_black",
+            [RouletteBetType.OddEven]: "type_odd_even",
+            [RouletteBetType.BigSmall]: "type_big_small"
         };
 
-        this.lblBetType.string = betTypeNames[type] || type;
+        const translationKey = betTypeKeys[type];
+        this.lblBetType.string = translationKey ? Translator.gameTranslate(translationKey) : type;
     }
 
     private formatChoiceDisplay(choice: string, type: string) {
@@ -101,45 +121,50 @@ export class RouletteBetDetailBodyItem extends BaseBetDetailLogItem {
             return;
         }
 
-        const choiceNames: { [key: string]: string } = {
-            small: "1-18", big: "19-36",
-            odd: "Odd", even: "Even", 
-            red: "Red", black: "Black",
-            dozen1: "1-12", dozen2: "13-24", dozen3: "25-36",
-            column1: "Column 1", column2: "Column 2", column3: "Column 3"
-        };
-
-        switch (type) {
-            case RouletteBetType.BigSmall:
-            case RouletteBetType.OddEven: 
-            case RouletteBetType.RedBlack:
-                this.lblChoice.string = choiceNames[choice] || choice;
-                break;
-            case RouletteBetType.Dozen:
-            case RouletteBetType.Column:
-                this.lblChoice.string = choiceNames[type + choice] || choice;
-                break;
-            case RouletteBetType.Split:
-            case RouletteBetType.Street:
-            case RouletteBetType.Triangle:
-            case RouletteBetType.Corner:
-            case RouletteBetType.FourNumbers:
-                this.lblChoice.string = choice.includes("-") ? choice.split("-").join(", ") : choice;
-                break;
-            case RouletteBetType.Line:
+        const choiceFormatters = {
+            [RouletteBetType.BigSmall]: () => choice === "small" ? "1-18" : choice === "big" ? "19-36" : choice,
+            [RouletteBetType.OddEven]: () => Translator.gameTranslate(`choice_${choice}`),
+            [RouletteBetType.RedBlack]: () => Translator.gameTranslate(`choice_${choice}`),
+            [RouletteBetType.Dozen]: () => {
+                const ranges = { "1": "1-12", "2": "13-24", "3": "25-36" };
+                return ranges[choice] || choice;
+            },
+            [RouletteBetType.Column]: () => Translator.gameTranslate(`column_number`, { num: choice }),
+            [RouletteBetType.Line]: () => {
                 if (choice.includes("-")) {
                     const numbers = choice.split("-");
-                    const firstHalf = numbers.slice(0, 3).join(", ");
-                    const secondHalf = numbers.slice(3, 6).join(", ");
-                    this.lblChoice.string = `${firstHalf}\n${secondHalf}`;
-                } else {
-                    this.lblChoice.string = choice;
+                    return `${numbers.slice(0, 3).join(", ")}\n${numbers.slice(3, 6).join(", ")}`;
                 }
-                break;
-            default:
-                this.lblChoice.string = choice;
+                return choice;
+            }
+        };
+
+        const formatter = choiceFormatters[type];
+        if (formatter) {
+            this.lblChoice.string = formatter();
+        } else if (choice.includes("-")) {
+            // Multi-number bets (split, street, triangle, corner, fourNumbers)
+            this.lblChoice.string = choice.split("-").join(", ");
+        } else {
+            this.lblChoice.string = choice;
         }
     }
+
+    private checkIfBetWon(betType: string, choice: string, data: BetDetailLogItemType): boolean {
+        const { settlementResult } = data;
+        
+        // Check if choice is in the winning choices array for this bet type
+        if (settlementResult && settlementResult[betType]) {
+            const winningChoices = settlementResult[betType];
+            return Array.isArray(winningChoices) && winningChoices.includes(choice);
+        }
+        
+        return false;
+    }
+
+    private setHighlightDetail(highlight: boolean) {
+        const color = highlight ? Color.YELLOW : Color.WHITE;
+        this.lblChoice.color = color;
+        this.lblAmount.color = color;
+    }
 }
-
-
