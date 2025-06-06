@@ -232,6 +232,7 @@ export const languages = {
         "type_4number": "四位数",
         "type_big_small": "大/小",
         "type_column": "列",
+        "type_corner": "角落",
         "type_dozen": "一打",
         "type_line": "线",
         "type_odd_even": "单/双",

@@ -232,6 +232,7 @@ export const languages = {
         "type_4number": "Four number",
         "type_big_small": "Big/Small",
         "type_column": "Column",
+        "type_corner": "Corner",
         "type_dozen": "Dozen",
         "type_line": "Line",
         "type_odd_even": "Odd/Even",

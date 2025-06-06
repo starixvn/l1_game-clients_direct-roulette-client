@@ -232,6 +232,7 @@ export const languages = {
         "type_4number": "สี่ตัวเลข",
         "type_big_small": "ใหญ่/เล็ก",
         "type_column": "คอลัมน์",
+        "type_corner": "มุม",
         "type_dozen": "โหล",
         "type_line": "เส้น",
         "type_odd_even": "คี่/คู่",

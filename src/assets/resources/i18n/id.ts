@@ -232,6 +232,7 @@ export const languages = {
         "type_4number": "Empat angka",
         "type_big_small": "Besar/Kecil",
         "type_column": "Kolom",
+        "type_corner": "Sudut",
         "type_dozen": "Dozen",
         "type_line": "Line",
         "type_odd_even": "Ganjil/Genap",

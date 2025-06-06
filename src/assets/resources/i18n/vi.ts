@@ -232,6 +232,7 @@ export const languages = {
         "type_4number": "Cược bộ bốn",
         "type_big_small": "Tài/Xỉu",
         "type_column": "Cược cột",
+        "type_corner": "Cược góc",
         "type_dozen": "Cược tá",
         "type_line": "Cược 2 hàng",
         "type_odd_even": "Chẵn/Lẻ",
